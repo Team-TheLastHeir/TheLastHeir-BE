@@ -1,5 +1,6 @@
 package com.example.heir_project.controller;
 
+import com.example.heir_project.config.JwtConfig;
 import com.example.heir_project.dto.AccountDeleteRequest;
 import com.example.heir_project.entity.Accounts;
 import com.example.heir_project.repository.AccountRepository;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -20,6 +22,7 @@ public class AccountsController {
 
     private final AccountRepository accountsRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtConfig jwtConfig; // JWT 발급용 의존성 추가
 
     @PostMapping
     public ResponseEntity<Accounts> createAccount(@RequestBody Accounts account) {
@@ -28,12 +31,13 @@ public class AccountsController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody Accounts request) {
+    public ResponseEntity<?> login(@RequestBody Accounts request) {
         Optional<Accounts> optionalAccount = accountsRepository.findByUsername(request.getUsername());
         if (optionalAccount.isPresent()) {
             Accounts acc = optionalAccount.get();
             if (passwordEncoder.matches(request.getPassword(), acc.getPassword())) {
-                return ResponseEntity.ok("Login successful");
+                String token = jwtConfig.generateToken(acc.getUsername());
+                return ResponseEntity.ok(Map.of("token", token)); // 토큰 응답
             } else {
                 return ResponseEntity.status(401).body("Invalid password");
             }
@@ -56,7 +60,7 @@ public class AccountsController {
             throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
         }
 
-        accountsRepository.delete(account); // Cascade 삭제 설정 필요
+        accountsRepository.delete(account);
         return ResponseEntity.ok("계정이 성공적으로 삭제되었습니다.");
     }
 }
