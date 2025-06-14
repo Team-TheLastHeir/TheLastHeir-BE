@@ -14,6 +14,7 @@ import java.util.function.Function;
 
 @Component
 public class JwtConfig {
+
     private final Key SECRET_KEY;
     private final long EXPIRATION_TIME = 1000 * 60 * 60 * 24; // 1일
 
