@@ -1,6 +1,9 @@
 package com.example.heir_project.config;
 
-import lombok.RequiredArgsConstructor;
+import com.example.heir_project.config.handler.JwtAuthenticationFilter;
+import com.example.heir_project.config.handler.LoginFailHandler;
+import lombok.RequiredArgsConstructor; // 추가됨
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,7 +18,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
     private final JwtConfig jwtConfig;
+    private final LoginFailHandler loginFailHandler;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -25,7 +31,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/accounts/login", "/api/accounts").permitAll()
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(new JwtAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class);
+                .formLogin(form -> form.failureHandler(loginFailHandler))
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
