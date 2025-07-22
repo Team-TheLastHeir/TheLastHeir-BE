@@ -1,4 +1,4 @@
-package com.example.heir_project.config.handler;
+package com.example.heir_project.handler;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

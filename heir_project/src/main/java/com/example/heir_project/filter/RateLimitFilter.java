@@ -1,4 +1,4 @@
-package com.example.heir_project.config;
+package com.example.heir_project.filter;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
