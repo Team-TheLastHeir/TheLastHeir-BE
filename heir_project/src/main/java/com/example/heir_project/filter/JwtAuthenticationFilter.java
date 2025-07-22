@@ -1,4 +1,4 @@
-package com.example.heir_project.config.handler;
+package com.example.heir_project.filter;
 
 import com.example.heir_project.config.JwtConfig;
 import jakarta.servlet.FilterChain;

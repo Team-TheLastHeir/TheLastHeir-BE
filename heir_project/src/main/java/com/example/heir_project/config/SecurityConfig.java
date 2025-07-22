@@ -1,6 +1,6 @@
 package com.example.heir_project.config;
 
-import com.example.heir_project.config.handler.JwtAuthenticationFilter;
+import com.example.heir_project.filter.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
