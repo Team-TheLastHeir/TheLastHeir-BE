@@ -49,7 +49,7 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(Arrays.asList(
                 "http://127.0.0.1:5500",
                 "http://localhost:5500",
-                "https://12545ef7df56.ngrok-free.app"
+                "https://9d566532f92c.ngrok-free.app"
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
