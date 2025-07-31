@@ -7,15 +7,22 @@ import java.util.ArrayList;
 
 @Entity
 @Table(name = "accounts")
-@Getter @Setter
-@NoArgsConstructor @AllArgsConstructor @Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Accounts {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id; // DB용 PK (자동 증가)
 
     @Column(nullable = false, unique = true)
-    private String username;
+    private String userId; // 사용자가 입력하는 ID (로그인용 ID)
+
+    @Column(nullable = false, unique = true)
+    private String username; // 닉네임 (표시용)
 
     @Column(nullable = false)
     private String password;
