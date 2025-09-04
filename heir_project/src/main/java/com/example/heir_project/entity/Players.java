@@ -26,5 +26,6 @@ public class Players {
     @Column(name = "int_stat")
     private Integer intStat;
 
-    private String location;
+    @OneToOne(mappedBy = "player", cascade = CascadeType.ALL, orphanRemoval = true)
+    private PlayerLocation location;
 }
