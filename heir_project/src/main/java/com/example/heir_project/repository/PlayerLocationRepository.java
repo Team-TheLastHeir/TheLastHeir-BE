@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface PlayerLocationRepository extends JpaRepository<PlayerLocation, Long> {
 
     // playerId로 위치 정보 조회
-    Optional<PlayerLocation> findByPlayerId(Long playerId);
+    Optional<PlayerLocation> findByPlayerId(Integer playerId);
 
     // player Entity로 위치 정보 조회
     Optional<PlayerLocation> findByPlayer(Players player);
