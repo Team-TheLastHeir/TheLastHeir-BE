@@ -25,13 +25,7 @@ public class PlayerLocation {
     private String sceneName;
 
     @Column(nullable = false)
-    private Double x;
-
-    @Column(nullable = false)
-    private Double y;
-
-    @Column(nullable = false)
-    private Double z;
+    private Integer campFire;
 
     @Column(nullable = false)
     private LocalDateTime updatedAt;
