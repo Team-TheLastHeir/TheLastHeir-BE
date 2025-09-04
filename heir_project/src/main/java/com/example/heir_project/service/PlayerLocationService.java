@@ -28,7 +28,7 @@ public class PlayerLocationService {
     @Transactional
     public PlayerLocationResponse saveOrUpdatePlayerLocation(Integer playerId, PlayerLocationRequest requestDto) {
         // 플레이어 존재 여부 확인
-        Players player = playersRepository.findById(playerId)
+        Players player = playersRepository.findById(playerId.longValue())
                 .orElseThrow(() -> new PlayerNotFoundException("플레이어를 찾을 수 없음. ID: " + playerId));
 
         // 기존 위치 정보 조회
