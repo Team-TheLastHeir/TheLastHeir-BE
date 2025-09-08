@@ -2,6 +2,8 @@ package com.example.heir_project.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.lang.NonNull;
+
 import java.util.List;
 import java.util.ArrayList;
 

@@ -3,7 +3,9 @@ package com.example.heir_project.controller;
 import com.example.heir_project.config.JwtConfig;
 import com.example.heir_project.dto.AccountDeleteRequest;
 import com.example.heir_project.entity.Accounts;
+import com.example.heir_project.entity.Players;
 import com.example.heir_project.repository.AccountRepository;
+import com.example.heir_project.repository.PlayersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +21,10 @@ import java.util.Optional;
 @RequestMapping("/api/accounts")
 @RequiredArgsConstructor
 public class AccountsController {
-
     private final AccountRepository accountsRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtConfig jwtConfig;
+    private final PlayersRepository playersRepository;
 
     // 회원가입
     @PostMapping
@@ -63,6 +65,20 @@ public class AccountsController {
         if (optionalAccount.isPresent()) {
             Accounts acc = optionalAccount.get();
             if (passwordEncoder.matches(request.getPassword(), acc.getPassword())) {
+
+                if (acc.getPlayers() == null || acc.getPlayers().isEmpty()) {
+                    Players newPlayer = Players.builder()
+                            .account(acc)
+                            .nickname(acc.getUsername())
+                            .level(1)
+                            .exp(0)
+                            .str(10)
+                            .dex(10)
+                            .intStat(10)
+                            .build();
+
+                    playersRepository.save(newPlayer);
+                }
                 String token = jwtConfig.generateToken(acc.getUsername());
                 return ResponseEntity.ok(Map.of("success", true, "token", token));
             } else {

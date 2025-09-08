@@ -27,9 +27,16 @@ public class PlayerLocationService {
     // 플레이어 위치 저장 및 업뎃
     @Transactional
     public PlayerLocationResponse saveOrUpdatePlayerLocation(Integer playerId, PlayerLocationRequest requestDto) {
+
+
         // 플레이어 존재 여부 확인
         Players player = playersRepository.findById(playerId.longValue())
                 .orElseThrow(() -> new PlayerNotFoundException("플레이어를 찾을 수 없음. ID: " + playerId));
+        System.out.println("Service 진입");
+        System.out.println("playerId = " + player.getId());
+        System.out.println("sceneName = " + requestDto.getSceneName());
+        System.out.println("campFire = " + requestDto.getCampFire());
+
 
         // 기존 위치 정보 조회
         Optional<PlayerLocation> existingLocation = playerLocationRepository.findByPlayerId(playerId);
